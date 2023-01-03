@@ -33,15 +33,29 @@ public class JpaMain {
             /*JPQL*/
 //            List<Member> result = em.createQuery("SELECT m FROM Member AS m", Member.class)
 //                    .getResultList();
-            List<Member> result = em.createQuery("SELECT m FROM Member AS m", Member.class)
-                    .setFirstResult(1)
-                    .setMaxResults(10)
-                    .getResultList();
 
-            for (Member member : result) {
-                System.out.println("member.getName() = " + member.getName());
-            }
+//            List<Member> result = em.createQuery("SELECT m FROM Member AS m", Member.class)
+//                    .setFirstResult(1)
+//                    .setMaxResults(10)
+//                    .getResultList();
+//
+//            for (Member member : result) {
+//                System.out.println("member.getName() = " + member.getName());
+//            }
+            /*플러시 테스트*/
+//            System.out.println("===============");
+//            Member member = new Member(200L, "member200");
+//            em.persist(member);
+//
+//            em.flush();
+//            System.out.println("===============");
 
+            /*준영속*/
+            Member findMember = em.find(Member.class, 200L);
+            findMember.setName("준영속");
+
+            em.detach(findMember);
+//            em.clear();
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
